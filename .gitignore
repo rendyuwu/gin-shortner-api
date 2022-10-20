@@ -167,4 +167,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Development
+.env
+
 # End of https://www.toptal.com/developers/gitignore/api/go,goland,windows
