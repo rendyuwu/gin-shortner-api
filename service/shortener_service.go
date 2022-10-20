@@ -10,12 +10,19 @@ import (
 type ShortenerService interface {
 	FindAll() []web.ShortenerResponse
 	FindById(id int) web.ShortenerResponse
+	FindByCode(code string) web.ShortenerResponse
 	Create(request web.ShortenerCreateRequest) web.ShortenerResponse
 	Update(request web.ShortenerUpdateRequest) web.ShortenerResponse
 	Delete(id int)
 }
 type ShortenerServiceImpl struct {
 	ShortenerRepository repository.ShortenerRepository
+}
+
+func NewShortenerService(shortenerRepository repository.ShortenerRepository) ShortenerService {
+	return &ShortenerServiceImpl{
+		ShortenerRepository: shortenerRepository,
+	}
 }
 
 func (service ShortenerServiceImpl) FindAll() []web.ShortenerResponse {
@@ -30,6 +37,18 @@ func (service ShortenerServiceImpl) FindById(id int) web.ShortenerResponse {
 	helper.IsNotFoundError(err)
 
 	return helper.ToShortenerResponse(shortener)
+}
+
+func (service ShortenerServiceImpl) FindByCode(code string) web.ShortenerResponse {
+	shortenerCustomCode, err := service.ShortenerRepository.FindByCustomCode(code)
+	if err == nil {
+		return helper.ToShortenerResponse(shortenerCustomCode)
+	}
+
+	shortenerCode, err := service.ShortenerRepository.FindByCode(code)
+	helper.IsNotFoundError(err)
+
+	return helper.ToShortenerResponse(shortenerCode)
 }
 
 func (service ShortenerServiceImpl) Create(request web.ShortenerCreateRequest) web.ShortenerResponse {
