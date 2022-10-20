@@ -21,7 +21,7 @@ func NewShortenerRepository(DB *gorm.DB) ShortenerRepository {
 	return &ShortenerRepositoryImpl{DB: DB}
 }
 
-func (repository ShortenerRepositoryImpl) FindAll() ([]model.Shortener, error) {
+func (repository *ShortenerRepositoryImpl) FindAll() ([]model.Shortener, error) {
 	var shorteners []model.Shortener
 
 	err := repository.DB.Find(&shorteners).Error
@@ -29,7 +29,7 @@ func (repository ShortenerRepositoryImpl) FindAll() ([]model.Shortener, error) {
 	return shorteners, err
 }
 
-func (repository ShortenerRepositoryImpl) FindById(id int) (model.Shortener, error) {
+func (repository *ShortenerRepositoryImpl) FindById(id int) (model.Shortener, error) {
 	var shortener model.Shortener
 
 	err := repository.DB.Find(&shortener, id).Error
@@ -37,19 +37,19 @@ func (repository ShortenerRepositoryImpl) FindById(id int) (model.Shortener, err
 	return shortener, err
 }
 
-func (repository ShortenerRepositoryImpl) Create(book model.Shortener) (model.Shortener, error) {
+func (repository *ShortenerRepositoryImpl) Create(book model.Shortener) (model.Shortener, error) {
 	err := repository.DB.Create(&book).Error
 
 	return book, err
 }
 
-func (repository ShortenerRepositoryImpl) Update(book model.Shortener) (model.Shortener, error) {
+func (repository *ShortenerRepositoryImpl) Update(book model.Shortener) (model.Shortener, error) {
 	err := repository.DB.Save(&book).Error
 
 	return book, err
 }
 
-func (repository ShortenerRepositoryImpl) Delete(book model.Shortener) error {
+func (repository *ShortenerRepositoryImpl) Delete(book model.Shortener) error {
 	err := repository.DB.Delete(&book).Error
 
 	return err
