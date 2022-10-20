@@ -1,0 +1,9 @@
+# Database
+MYSQL_HOST=localhost
+MYSQL_DATABASE=shorter
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=
+
+# App / Api Configuration
+APP_PORT=8080
