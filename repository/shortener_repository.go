@@ -9,6 +9,7 @@ type ShortenerRepository interface {
 	FindAll() ([]model.Shortener, error)
 	FindById(id int) (model.Shortener, error)
 	FindByCode(code string) (model.Shortener, error)
+	FindByCustomCode(customCode string) (model.Shortener, error)
 	Create(book model.Shortener) (model.Shortener, error)
 	Update(book model.Shortener) (model.Shortener, error)
 	Delete(book model.Shortener) error
@@ -42,6 +43,14 @@ func (repository *ShortenerRepositoryImpl) FindByCode(code string) (model.Shorte
 	var shortener model.Shortener
 
 	err := repository.DB.Where("code = ?", code).Find(&shortener).Error
+
+	return shortener, err
+}
+
+func (repository *ShortenerRepositoryImpl) FindByCustomCode(customCode string) (model.Shortener, error) {
+	var shortener model.Shortener
+
+	err := repository.DB.Where("custom_code = ?", customCode).Find(&shortener).Error
 
 	return shortener, err
 }
