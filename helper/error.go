@@ -9,7 +9,7 @@ import (
 func IsNotFoundError(err error) {
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			panic(exception.NewNotFoundError("book is not found"))
+			panic(exception.NewNotFoundError("shortener link is not found"))
 		} else {
 			panic(err)
 		}
