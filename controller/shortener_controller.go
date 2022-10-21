@@ -43,11 +43,7 @@ func (controller ShortenerControllerImpl) FindById(c *gin.Context) {
 func (controller ShortenerControllerImpl) FindByCode(c *gin.Context) {
 	shortener := controller.ShortenerService.FindByCode(c.Param("idShortener"))
 
-	c.JSON(http.StatusOK, web.WebResponse{
-		Code:   http.StatusOK,
-		Status: "OK",
-		Data:   shortener,
-	})
+	c.Redirect(http.StatusMovedPermanently, shortener.Url)
 }
 
 func (controller ShortenerControllerImpl) Create(c *gin.Context) {
