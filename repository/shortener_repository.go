@@ -34,15 +34,14 @@ func (repository *ShortenerRepositoryImpl) FindAll() ([]model.Shortener, error) 
 func (repository *ShortenerRepositoryImpl) FindById(id int) (model.Shortener, error) {
 	var shortener model.Shortener
 
-	err := repository.DB.Find(&shortener, id).Error
-
+	err := repository.DB.First(&shortener, id).Error
 	return shortener, err
 }
 
 func (repository *ShortenerRepositoryImpl) FindByCode(code string) (model.Shortener, error) {
 	var shortener model.Shortener
 
-	err := repository.DB.Where("code = ?", code).Find(&shortener).Error
+	err := repository.DB.Where("code = ?", code).First(&shortener).Error
 
 	return shortener, err
 }
@@ -50,7 +49,7 @@ func (repository *ShortenerRepositoryImpl) FindByCode(code string) (model.Shorte
 func (repository *ShortenerRepositoryImpl) FindByCustomCode(customCode string) (model.Shortener, error) {
 	var shortener model.Shortener
 
-	err := repository.DB.Where("custom_code = ?", customCode).Find(&shortener).Error
+	err := repository.DB.Where("custom_code = ?", customCode).First(&shortener).Error
 
 	return shortener, err
 }
