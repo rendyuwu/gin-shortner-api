@@ -8,7 +8,12 @@ import (
 
 func NewRouter(controller controller.ShortenerController) *gin.Engine {
 	router := gin.New()
+
+	// use middleware
 	router.Use(gin.Logger(), exception.Recovery())
+
+	// Disable Console Color, you don't need console color when writing the logs to file.
+	gin.DisableConsoleColor()
 
 	//route root
 	router.GET("/:idShortener", controller.FindByCode)
